@@ -1,30 +1,42 @@
-from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_ollama import ChatOllama
 
-load_dotenv()
-
 
 def main():
-    print("Hello from langchain-course!")
     information = """
-    Justin Drew Bieber (/ˈbiːbər/ BEE-bər; born March 1, 1994)[1] is a Canadian singer.[2] Regarded as a prominent figure in contemporary popular music,[3][4] he rose to fame in the late 2000s with his debut extended play, My World (2009), receiving international recognition and establishing himself as a teen idol.
+    Elon Reeve Musk (born June 28, 1971) is a businessman known for his work in technology, transportation, and space exploration. Born in Pretoria, South Africa, he moved to Canada before attending the University of Pennsylvania in the United States.
 
-Bieber's debut studio album, My World 2.0 (2010), topped the US Billboard 200, making him the youngest solo male to do so in 47 years.[5] Its lead single, "Baby" became one of the best selling singles in the United States.[6] His second album, Under the Mistletoe (2011), became the first Christmas album by a male artist to debut atop the chart.[7] With his third studio album, Believe (2012), and its acoustic re-release (2013), Bieber became the first artist in Billboard charts history to have five US number-one albums by the age of 18.[8]
+Musk co-founded Zip2, an online city guide software company, and later X.com, an online financial services company that eventually became PayPal. After PayPal was acquired by eBay in 2002, Musk used much of the proceeds to invest in new ventures.
 
-Following a series of controversies, he returned to music with the EDM-infused single "Where Are Ü Now", which set the tone for his fourth studio album, Purpose (2015). It yielded three US Billboard Hot 100 number-one singles: "Love Yourself", "Sorry", and "What Do You Mean?". The songs also occupied the top three of the UK singles chart, making Bieber the first artist in history to achieve this. In 2017, he featured on the US number-one singles "I'm the One" and "Despacito"; the latter tied the then-record for the most weeks at number one in history. His following two studio albums, Changes (2020) and Justice (2021), debuted at number one, making Bieber the youngest solo act to have eight US number-one albums. In 2021, he also released two US number-one singles, "Peaches" and "Stay". After a brief hiatus, he released his seventh and eighth studio albums, Swag and Swag II, in 2025.
+He founded SpaceX in 2002 with the goal of reducing the cost of space transportation and enabling the colonization of Mars. Under his leadership, SpaceX developed the Falcon rockets, Dragon spacecraft, and the reusable rocket system, significantly reducing the cost of launching payloads into space.
 
-"""
+Musk joined Tesla Motors in 2004 as an investor and later became its CEO and product architect. Tesla became one of the world's leading electric vehicle manufacturers, producing vehicles such as the Model S, Model 3, Model X, and Model Y. The company also expanded into battery storage and solar energy products.
+
+In addition to SpaceX and Tesla, Musk founded The Boring Company, which focuses on tunnel construction and transportation infrastructure. He also co-founded Neuralink, a company developing brain-computer interfaces, and xAI, an artificial intelligence company.
+
+In 2022, Musk acquired Twitter, later renaming the platform to X. His leadership and business decisions have attracted significant public attention, making him one of the most influential and controversial entrepreneurs of the modern era.
+    """
 
     summary_template = """
-    Explain the concept of {information}. Give me a short summary.
+You are an expert text summarizer.
+
+Summarize the following information in 4-5 concise sentences.
+
+Information:
+{information}
 """
-    summary_prompt_template = PromptTemplate(
-        input_variables=["information"], template=summary_template
+
+    prompt = PromptTemplate.from_template(summary_template)
+
+    llm = ChatOllama(
+        model="gemma3:270m",
+        temperature=0,
     )
-    llm = ChatOllama(temperature=0, model="gemma3:270m")
-    chain = summary_prompt_template | llm
-    response = chain.invoke(input={"information": information})
+
+    chain = prompt | llm
+
+    response = chain.invoke({"information": information})
+
     print(response.content)
 
 
