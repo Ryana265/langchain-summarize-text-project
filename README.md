@@ -1,29 +1,31 @@
 # LangChain Text Summarizer
 
-A simple AI-powered text summarization project built with **LangChain** and **Ollama**. This project demonstrates how to use prompt templates and local large language models (LLMs) to generate concise summaries from long pieces of text.
+A simple AI-powered text summarization project built with **LangChain** and **Ollama**, powered by Google's **Gemma** model. This project demonstrates how to use prompt templates and a locally running LLM to generate concise summaries from long pieces of text—without relying on cloud-based AI APIs.
 
 ## Features
 
-* Summarizes long-form text into short, readable summaries.
-* Uses LangChain's `PromptTemplate` for reusable prompts.
-* Runs completely locally using Ollama (no OpenAI or Gemini API required).
+* Summarizes long-form text into concise, easy-to-read summaries.
+* Uses LangChain's `PromptTemplate` for reusable prompt creation.
+* Runs locally with Ollama and the Gemma model.
+* No OpenAI or Gemini API key required.
 * Beginner-friendly project for learning LangChain fundamentals.
 
 ## Tech Stack
 
-* Python 3.13+
+* Python
 * LangChain
 * LangChain Ollama
 * Ollama
-* UV (Python package manager)
+* Gemma
+* UV
 
 ## Project Structure
 
 ```text
 .
-├── main.py          # Main application
-├── pyproject.toml   # Project dependencies
-├── uv.lock          # Dependency lock file
+├── main.py
+├── pyproject.toml
+├── uv.lock
 └── README.md
 ```
 
@@ -48,63 +50,62 @@ Download and install Ollama from:
 
 https://ollama.com
 
-### 4. Download a model
-
-For example:
+### 4. Pull the Gemma model
 
 ```bash
-ollama pull llama3.2
+ollama pull gemma3
 ```
 
-### 5. Run the Ollama server
+> If you're using a different Gemma version (for example `gemma3:4b`), update the model name in your code accordingly.
+
+### 5. Start Ollama
 
 ```bash
 ollama serve
 ```
 
-If Ollama is already running, you can skip this step.
-
-### 6. Run the project
+### 6. Run the application
 
 ```bash
 uv run main.py
 ```
 
-## Example Workflow
+## How It Works
 
-1. Provide a block of text.
+1. The user provides a block of text.
 2. LangChain inserts the text into a prompt template.
-3. The prompt is sent to the local Ollama model.
-4. The model returns a concise summary.
+3. The prompt is sent to the local Gemma model through Ollama.
+4. Gemma generates a concise summary.
+5. The summarized output is displayed in the terminal.
 
 ## Example Prompt
 
 ```text
-Summarize the following information:
+Summarize the following information in a few sentences.
 
 {information}
 ```
 
-## Learning Objectives
+## Learning Outcomes
 
 This project demonstrates:
 
-* LangChain Prompt Templates
+* Prompt Templates
 * LangChain Expression Language (LCEL)
 * Runnable Chains
-* Local LLM integration with Ollama
-* Prompt engineering basics
+* Local LLMs with Ollama
+* Integrating the Gemma model with LangChain
+* Basic prompt engineering
 
 ## Future Improvements
 
-* Upload and summarize PDF files
-* Summarize web articles from URLs
-* Support multiple languages
-* Stream responses
-* Build a Streamlit or React frontend
+* Summarize PDF documents
+* Summarize web pages
+* Add a Streamlit or React frontend
+* Support multiple LLMs
 * Add conversation memory
-* Add output parsers for structured summaries
+* Generate structured summaries using output parsers
 
 ## License
 
-This project is intended for educational and learning purposes.
+This project is created for educational and learning purposes.
